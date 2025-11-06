@@ -1,0 +1,253 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-01T00:02:24.468Z",
+  "id": "SkJgpif14PZHZcZD",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "If y Switch",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -432,
+        -16
+      ],
+      "id": "c31e23a2-8e42-4a19-8330-650bdb8b2939",
+      "name": "Telegram Trigger",
+      "webhookId": "bd1e52fb-1114-47d6-8170-1b2699c723ab",
+      "credentials": {
+        "telegramApi": {
+          "id": "ihoJRNexlyuz3GAw",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/addlead",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "17a1f567-4c40-4395-8f0d-0b32e8aa8688"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "add-lead"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8aba2106-2b95-45a1-b7ea-8ec1dea9916b",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "ayuda",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ayuda"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "53ab0edd-8663-442f-8246-532765c73cc0",
+                    "leftValue": "={{ $json.message.from.is_bot }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Is_Bot"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -240,
+        -32
+      ],
+      "id": "13bd38a7-92a4-4f23-976f-90883a5d2039",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Lead añadido con éxito",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        -176
+      ],
+      "id": "a8846564-7ba3-4073-9aca-ecd900344be0",
+      "name": "Send a text message",
+      "webhookId": "5ec95f2c-873c-4ee3-862d-d393bb1d7f3a",
+      "credentials": {
+        "telegramApi": {
+          "id": "ihoJRNexlyuz3GAw",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "El usuario ha solicitado ayuda",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        -16
+      ],
+      "id": "84ed002d-f1eb-4df2-9e9f-afe43c70a207",
+      "name": "Send a text message1",
+      "webhookId": "5ec95f2c-873c-4ee3-862d-d393bb1d7f3a",
+      "credentials": {
+        "telegramApi": {
+          "id": "ihoJRNexlyuz3GAw",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "El usuario es un bot",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        160
+      ],
+      "id": "269446cf-2f90-4ed2-bda4-1d555f0faef0",
+      "name": "Send a text message2",
+      "webhookId": "5ec95f2c-873c-4ee3-862d-d393bb1d7f3a",
+      "credentials": {
+        "telegramApi": {
+          "id": "ihoJRNexlyuz3GAw",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-01T00:02:24.472Z",
+      "updatedAt": "2025-11-01T00:02:24.472Z",
+      "role": "workflow:owner",
+      "workflowId": "SkJgpif14PZHZcZD",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-01T13:35:51.000Z",
+  "versionId": "a924a1e9-a319-4a4d-ab7f-d176f9295bc1"
+}
