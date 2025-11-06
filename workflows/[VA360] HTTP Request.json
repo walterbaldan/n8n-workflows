@@ -1,0 +1,336 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Language",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Language": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-31T18:32:37.390Z",
+  "id": "S4QoaJI537totThd",
+  "isArchived": true,
+  "meta": null,
+  "name": "[VA360] HTTP Request",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "729a78b7-3cb2-4400-9526-ad2410e1b61a",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -880,
+        208
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://exercisedb.p.rapidapi.com/exercises",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "10"
+            },
+            {
+              "name": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "exercisedb.p.rapidapi.com"
+            },
+            {
+              "name": "x-rapidapi-key",
+              "value": "xxxxxxx"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "160f655f-24da-482e-8700-ba3b911fb760",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -416,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "de94bcb8-d9be-4153-a527-02dee975e06b",
+              "name": "language",
+              "value": "french",
+              "type": "string"
+            },
+            {
+              "id": "d153ae78-a2fc-4d2e-8bef-77a265720e24",
+              "name": "Test",
+              "value": "test",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1484f92d-2903-413d-829c-75530ea3c622",
+      "name": "Language",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -624,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1cO2PvO6Zm22jR5wXMIi0jd4Qlz-39zqndX26QktHJ0s",
+          "mode": "list",
+          "cachedResultName": "ExerciseDB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cO2PvO6Zm22jR5wXMIi0jd4Qlz-39zqndX26QktHJ0s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cO2PvO6Zm22jR5wXMIi0jd4Qlz-39zqndX26QktHJ0s/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "bodypart": "={{ $('HTTP Request').item.json.bodyPart }}",
+            "name": "={{ $('HTTP Request').item.json.name }}",
+            "image": "={{ $('HTTP Request').item.json.gifUrl }}",
+            "target": "={{ $('HTTP Request').item.json.target }}",
+            "language": "={{ $('Language').item.json.language }}",
+            "instructions": "={{ $json.message.content }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bodypart",
+              "displayName": "bodypart",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "image",
+              "displayName": "image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "target",
+              "displayName": "target",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "language",
+              "displayName": "language",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "instructions",
+              "displayName": "instructions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "276e85d0-e9b1-44da-8c4a-9833468d2711",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        368,
+        224
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ziBwoNqb2xUn76PS",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "34d0edc9-7c12-432a-9b17-6ef73087769b",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Traduce el contenido al siguiente idioma: {{ $('Language').item.json.language }}\n\nEl contenido es este: {{ $('Loop Over Items').item.json.instructions }}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "feaba685-2062-4317-998b-1f15b102027b",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        224
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "c5ea12d5-f766-41d3-a661-7236ce9c028a",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-31T18:32:37.393Z",
+      "updatedAt": "2025-10-31T18:32:37.393Z",
+      "role": "workflow:owner",
+      "workflowId": "S4QoaJI537totThd",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-31T18:37:00.000Z",
+  "versionId": "1c19fcb9-0787-4045-b771-dc1c934cedc6"
+}
