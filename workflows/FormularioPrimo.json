@@ -1,0 +1,110 @@
+{
+  "active": false,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-29T22:33:21.387Z",
+  "id": "1KG3Eeg7sDt8p7kh",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "FormularioPrimo",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "FormularioPrincipal",
+        "formDescription": "Es un formulario de prueba para almacenar datos",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Escriba su Nombre y Apellido (en ese orden)",
+              "placeholder": "Juan Dominguez",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Escriba su correo electrónico",
+              "fieldType": "email",
+              "placeholder": "juan@correo.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Indique su número de celular (solo el número)",
+              "fieldType": "number",
+              "placeholder": "66778899",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "58de9211-bc21-449e-8590-6de9b7af4278",
+      "name": "On form submission",
+      "webhookId": "8f034fa5-371d-415e-8794-285ef085d054"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-2024-05-13",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-2024-05-13"
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a7f300db-894b-4961-95fd-a569e4bb017e",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "asPH9JXOIU6bedHu",
+          "name": "OpenAi account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-29T22:33:21.390Z",
+      "updatedAt": "2025-10-29T22:33:21.390Z",
+      "role": "workflow:owner",
+      "workflowId": "1KG3Eeg7sDt8p7kh",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-29T22:42:39.000Z",
+  "versionId": "f3edc82f-74db-48c8-9e1c-02e5d9fc8c93"
+}
