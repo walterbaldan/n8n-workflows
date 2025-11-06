@@ -1,0 +1,113 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-11-01T14:25:32.796Z",
+  "id": "K09nUhDpbETzK309",
+  "isArchived": false,
+  "meta": null,
+  "name": "Nodo Funciones",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        0
+      ],
+      "id": "520cd819-945c-46e8-a221-637021957e65",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.theverge.com/rss/index.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -256,
+        0
+      ],
+      "id": "35906452-7d53-4349-aa8b-24429349beea",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Este código procesa todos los items recibidos del nodo anterior (RSS)\nreturn items.map(item => {\n  const newItem = { ...item }; // Clonamos el item original\n\n  // Obtener el texto HTML del campo \"content\" (o \"contentSnippet\" si no existe)\n  const html = item.json.content || item.json.contentSnippet || '';\n\n  // Expresión regular para encontrar la primera imagen <img src=\"...\">\n  const match = html.match(/<img[^>]+src=[\"']([^\"']+)[\"']/i);\n\n  // Si encuentra imagen, agregamos la nueva propiedad \"image\"\n  if (match && match[1]) {\n    newItem.json.image = match[1];\n  } else {\n    newItem.json.image = null; // o podés dejarlo vacío: ''\n  }\n\n  return newItem;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        -128
+      ],
+      "id": "5c140695-fe6f-4ddc-ae86-674ffebbd8a8",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const newItem = { ...item }; // Clonamos el item original\n\n  // Verificamos que exista la key \"title\"\n  if (newItem.json.title) {\n    newItem.json.title = 'WalterFundation:  ' + newItem.json.title;\n  }\n\n  return newItem;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        96
+      ],
+      "id": "4ba5d8a5-3f4c-4660-9415-f7c8856bf5f6",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-01T14:25:32.803Z",
+      "updatedAt": "2025-11-01T14:25:32.803Z",
+      "role": "workflow:owner",
+      "workflowId": "K09nUhDpbETzK309",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-01T14:38:42.000Z",
+  "versionId": "b2eb636d-aa6d-4658-ae40-73fc254473e9"
+}
