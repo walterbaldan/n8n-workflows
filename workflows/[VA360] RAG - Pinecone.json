@@ -5,18 +5,7 @@
       "main": [
         [
           {
-            "node": "Google Drive",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Drive": {
-      "main": [
-        [
-          {
-            "node": "Pinecone Vector Store",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -55,12 +44,36 @@
           }
         ]
       ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "createdAt": "2025-11-04T21:20:11.351Z",
-  "id": "5OLTlBzx8KijGwnD",
+  "createdAt": "2025-11-04T21:20:15.691Z",
+  "id": "F9WpseTN2h1dVOXV",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "[VA360] RAG - Pinecone",
   "nodes": [
     {
@@ -75,13 +88,10 @@
         "triggerOn": "specificFolder",
         "folderToWatch": {
           "__rl": true,
-          "value": "1ihxQGrrssUbVTesdYuqGBNonJu58GCxQ",
-          "mode": "list",
-          "cachedResultName": "RAG",
-          "cachedResultUrl": "https://drive.google.com/drive/folders/1ihxQGrrssUbVTesdYuqGBNonJu58GCxQ"
+          "value": "1Fk0m2GiuLLltw9JH1ZfLJ9zjAQrwv3tR",
+          "mode": "id"
         },
-        "event": "fileCreated",
-        "options": {}
+        "event": "watchFolderUpdated"
       },
       "id": "c29ac9fa-84fa-42bf-ad2e-5bb4710e4a74",
       "name": "Google Drive Trigger",
@@ -100,25 +110,6 @@
     },
     {
       "parameters": {
-        "operation": "download",
-        "fileId": {
-          "__rl": true,
-          "value": "={{ $json.id }}",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "id": "9003897f-2788-4b02-80df-e221bf242569",
-      "name": "Google Drive",
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        -240,
-        256
-      ]
-    },
-    {
-      "parameters": {
         "model": "text-embedding-3-small",
         "options": {}
       },
@@ -127,9 +118,15 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1,
       "position": [
-        -32,
+        176,
         480
-      ]
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "5axlD0VbH7VPNLxV",
+          "name": "OpenAi account 7"
+        }
+      }
     },
     {
       "parameters": {
@@ -150,7 +147,7 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        176,
+        384,
         480
       ]
     },
@@ -165,7 +162,7 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        176,
+        384,
         640
       ]
     },
@@ -174,9 +171,9 @@
         "mode": "insert",
         "pineconeIndex": {
           "__rl": true,
-          "value": "libreria",
+          "value": "libreria6",
           "mode": "list",
-          "cachedResultName": "libreria"
+          "cachedResultName": "libreria6"
         },
         "options": {
           "pineconeNamespace": "libreria-va360"
@@ -187,9 +184,53 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1,
       "position": [
+        176,
+        256
+      ],
+      "credentials": {
+        "pineconeApi": {
+          "id": "QhpTGFQOv5XeQbMG",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Return multiple files as items\nreturn [\n  {\n    fileId: \"1YRG-cDyKghBoLPLmNdr3lCDADgDzU-g8\",\n    fileName: \"inventario-libros\"\n  },\n  {\n    fileId: \"1-rUZnCsWIacTF9JmHt7_v4TFEMoeGSwK\", \n    fileName: \"faq-libreria\"\n  }\n  // Agrega más archivos aquí si necesitas\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -256,
+        256
+      ],
+      "id": "7127331f-7f06-4066-b81d-e6db2cdcb2ea",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.fileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "9003897f-2788-4b02-80df-e221bf242569",
+      "name": "Download file",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
         -32,
         256
-      ]
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ukEr84LecIIZbNHw",
+          "name": "Google Drive account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -198,16 +239,20 @@
   },
   "shared": [
     {
-      "createdAt": "2025-11-04T21:20:11.357Z",
-      "updatedAt": "2025-11-04T21:20:11.357Z",
+      "createdAt": "2025-11-04T21:20:15.722Z",
+      "updatedAt": "2025-11-04T21:20:15.722Z",
       "role": "workflow:owner",
-      "workflowId": "5OLTlBzx8KijGwnD",
+      "workflowId": "F9WpseTN2h1dVOXV",
       "projectId": "wwdcdBgDn7iCDiTl"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Google Drive Trigger": {
+      "lastTimeChecked": "2025-11-05T13:45:38Z"
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-11-04T21:20:11.351Z",
-  "versionId": "7b9b0fb4-d10c-403a-8e03-e622954719fe"
+  "triggerCount": 1,
+  "updatedAt": "2025-11-05T14:43:51.000Z",
+  "versionId": "10bd53f3-a599-417d-9454-e8c8337b668b"
 }
