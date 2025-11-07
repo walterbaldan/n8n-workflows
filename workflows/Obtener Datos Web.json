@@ -1,0 +1,158 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many posts": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-29T22:44:25.521Z",
+  "id": "c44VbcztXAl8kFK0",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Obtener Datos Web",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        -128
+      ],
+      "id": "e980ac74-6fb1-45dd-8e54-ce62ddaaa5c9",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        -128
+      ],
+      "id": "b1949eae-07c9-4210-825d-f2e168d7f4b9",
+      "name": "Get many posts",
+      "credentials": {
+        "wordpressApi": {
+          "id": "BOwrBwx1a6x0ETmA",
+          "name": "Wordpress account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1fT3XWL6UeOkOyeUXFwrsfzLda2fZeD3p6O3I7PvHBrE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fT3XWL6UeOkOyeUXFwrsfzLda2fZeD3p6O3I7PvHBrE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Titulo": "={{ $json.title.rendered }}",
+            "Fecha": "={{ $json.date }}",
+            "Otro": "={{ $json.link }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Titulo",
+              "displayName": "Titulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Otro",
+              "displayName": "Otro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -224,
+        -128
+      ],
+      "id": "4540fb1d-6f22-4fd8-bfb0-0007bc8a52c9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "0QIblqQurxe62Qfv",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-29T22:44:25.524Z",
+      "updatedAt": "2025-10-29T22:44:25.524Z",
+      "role": "workflow:owner",
+      "workflowId": "c44VbcztXAl8kFK0",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-29T23:44:01.000Z",
+  "versionId": "f76c37bc-f6a8-4180-804f-a6941324a214"
+}
