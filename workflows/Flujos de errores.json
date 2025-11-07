@@ -1,0 +1,144 @@
+{
+  "active": false,
+  "connections": {
+    "n8n Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-01T15:06:09.120Z",
+  "id": "iz2fdRn4Q6at2lkH",
+  "isArchived": false,
+  "meta": null,
+  "name": "Flujos de errores",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "e3b03e6a-5b10-4fd3-8455-9d305a29de95",
+        "formTitle": "Test",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Test ",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f9d9c49f-2745-4278-990f-256ba1d7d0c5",
+      "name": "n8n Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        -416,
+        80
+      ],
+      "webhookId": "e3b03e6a-5b10-4fd3-8455-9d305a29de95"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1a1f4fed-9b61-4818-9b37-496848ce172f",
+              "leftValue": "={{ $json['Test '] }}",
+              "rightValue": "Texto",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d899ec28-d610-49df-b54b-8ee8e2086527",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "cd96e288-f098-4587-a1a7-edd3a4c05a9f",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Ha fallado el flujo. El campo Test no lleva Texto"
+      },
+      "id": "94da3121-c364-49c7-a992-40ed8d87a42e",
+      "name": "Stop and Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        0,
+        208
+      ],
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "oDwRyL8cKTSDUo0N"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-01T15:06:09.123Z",
+      "updatedAt": "2025-11-01T15:06:09.123Z",
+      "role": "workflow:owner",
+      "workflowId": "iz2fdRn4Q6at2lkH",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-01T15:10:45.000Z",
+  "versionId": "401ba43c-eea1-41c9-95da-fc42d1a4d262"
+}
