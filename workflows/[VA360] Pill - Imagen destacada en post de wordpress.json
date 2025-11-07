@@ -1,0 +1,190 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Creo un post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creo un post": {
+      "main": [
+        [
+          {
+            "node": "Descargo la imagen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargo la imagen": {
+      "main": [
+        [
+          {
+            "node": "Subo la imagen a Wordpress",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subo la imagen a Wordpress": {
+      "main": [
+        [
+          {
+            "node": "Asigno imagen a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-05T20:46:54.062Z",
+  "id": "o087lJvLBvGuHkL6",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "[VA360] Pill - Imagen destacada en post de wordpress",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "3b391536-dabf-4a97-adcf-aed32334960f",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        384,
+        -160
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://pskechkh.lucusprueba.es/wp-content/uploads/2024/08/va360-academy.png",
+        "options": {}
+      },
+      "id": "d0408380-6a79-4e45-b92b-3331475651ef",
+      "name": "Descargo la imagen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        752,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "title": "Test Pill",
+        "additionalFields": {
+          "content": "Contenido del post",
+          "status": "draft",
+          "categories": [
+            8,
+            66
+          ]
+        }
+      },
+      "id": "10634de1-e61f-4250-aa3c-1e47cb810c21",
+      "name": "Creo un post",
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        576,
+        -160
+      ],
+      "credentials": {
+        "wordpressApi": {
+          "id": "BOwrBwx1a6x0ETmA",
+          "name": "Wordpress account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vayesa.com/wp-json/wp/v2/media",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-disposition",
+              "value": "=attachment; filename={{ $json.title.rendered }}.{{ $binary.data.fileExtension }}"
+            },
+            {
+              "name": "content-type",
+              "value": "={{ $binary.data.mimeType }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "id": "34d2740e-896e-4e1f-8b70-b8c6f5c5fb73",
+      "name": "Subo la imagen a Wordpress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        944,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://vayesa.com/wp-json/wp/v2/posts/{{ $('Creo un post').item.json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "featured_media",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "189446a7-bd3d-438c-adcf-7aebf38842e7",
+      "name": "Asigno imagen a post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1104,
+        -160
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Panama",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-05T20:46:54.073Z",
+      "updatedAt": "2025-11-05T20:46:54.073Z",
+      "role": "workflow:owner",
+      "workflowId": "o087lJvLBvGuHkL6",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-05T20:51:54.000Z",
+  "versionId": "9ee573c3-9949-4011-b4c8-b7925fc92665"
+}
