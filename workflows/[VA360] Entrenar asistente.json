@@ -1,0 +1,263 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        []
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-04T14:42:12.549Z",
+  "id": "ZZewJhLFrl6wvX3Y",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "[VA360] Entrenar asistente",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5887fb1d-0e3b-4701-b8e4-dc4d59eff349",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -48,
+        -208
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM libros",
+        "options": {}
+      },
+      "id": "345d9dfa-e73d-4c28-a83f-171b6c82ae9d",
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        144,
+        -208
+      ],
+      "credentials": {
+        "mySql": {
+          "id": "E9MUq9wxWSadkXdF",
+          "name": "MySQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtiene los datos del nodo anterior (el JSON que has proporcionado)\nconst items = $input.all();\n\n// Inicializa un array vacío para almacenar las líneas del archivo\nlet lines = [];\n\n// Recorre cada objeto del array y forma una línea con la información necesaria\nitems.forEach(item => {\n  const line = `Nombre: ${item.json.nombre} - Editorial: ${item.json.editorial} - Resumen: ${item.json.resumen} - Precio: ${item.json.precio}€ Stock: ${item.json.stock}`;\n  lines.push(line);\n});\n\n// Une todas las líneas con saltos de línea y crea el contenido del archivo\nconst fileContent = lines.join('\\n');\n\n// Convierte el contenido en un buffer binario\nconst buffer = Buffer.from(fileContent, 'utf-8');\n\n// Genera el timestamp Unix\nconst timestamp = Math.floor(Date.now() / 1000);\n\n// Devuelve el archivo como binario con el nombre libros_{timestamp_unix}.txt\nreturn {\n  binary: {\n    data: {\n      fileName: `libros_${timestamp}.txt`,\n      mimeType: 'text/plain',\n      data: buffer.toString('base64')\n    }\n  }\n};\n"
+      },
+      "id": "8cc9fe3b-6694-4040-9fc5-9ef63204111c",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        -208
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "binary.data.data",
+        "options": {
+          "fileName": "={{ $json.binary.data.fileName }}"
+        }
+      },
+      "id": "ec135235-19e7-4250-a433-783b21546d5d",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        -208
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "binaryPropertyName": "=data",
+        "options": {
+          "purpose": "assistants"
+        }
+      },
+      "id": "6a3ab8d0-a5c7-4cb0-9e83-e82096a1877a",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        -208
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "186c5fe0-88ae-40e0-8d50-e68198bf56bf",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        112
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "eb7827f2-bbcc-4ba8-8269-d75116af3d40",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        464,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "assistant",
+        "assistantId": {
+          "__rl": true,
+          "value": "asst_wEZTiuWfI0gx30BcVeQeQbUL",
+          "mode": "list",
+          "cachedResultName": "libros_agente"
+        },
+        "options": {}
+      },
+      "id": "f5c6f0f1-9158-4b3c-8320-fa34193bd896",
+      "name": "OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.5,
+      "position": [
+        432,
+        -32
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "5axlD0VbH7VPNLxV",
+          "name": "OpenAi account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hola, ¿qué libro te interesa hoy?\n",
+        "options": {}
+      },
+      "id": "393ae068-c84e-4cf1-9610-388c231ddb11",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        -32
+      ],
+      "webhookId": "4f2c335a-6c4a-446d-b5e5-bb3f82ca89f0"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-04T14:42:12.554Z",
+      "updatedAt": "2025-11-04T14:42:12.554Z",
+      "role": "workflow:owner",
+      "workflowId": "ZZewJhLFrl6wvX3Y",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-07T13:44:23.000Z",
+  "versionId": "5115011c-631b-4293-8bef-ac6239d80cfc"
+}
