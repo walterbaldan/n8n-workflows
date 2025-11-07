@@ -1,0 +1,97 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-11-01T22:36:05.707Z",
+  "id": "qT0uUtXnFOdFh19T",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Integraciones",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "https://airtable.com/appHGo4EJYmcRlLz7/tblUTq9WqezZWWnVZ/viw6LEMYw0BdmeYKN?blocks=hide",
+          "mode": "url"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "https://airtable.com/appHGo4EJYmcRlLz7/tblUTq9WqezZWWnVZ/viw6LEMYw0BdmeYKN?blocks=hide",
+          "mode": "url"
+        },
+        "triggerField": "=Name",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        128
+      ],
+      "id": "be1f0771-0658-4fa8-9cb8-790b06f0baa2",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "as2nKietHZp3M7m9",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "2d060132-eeca-437e-b53e-ea9d7bae327a",
+      "name": "Email Trigger (IMAP)"
+    },
+    {
+      "parameters": {
+        "path": "93abf7b8-e600-416b-9515-4f5b9b48a10a",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -176
+      ],
+      "id": "2319d581-b93e-4993-92a8-b17ee718bb4e",
+      "name": "Webhook",
+      "webhookId": "93abf7b8-e600-416b-9515-4f5b9b48a10a"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-01T22:36:05.732Z",
+      "updatedAt": "2025-11-01T22:36:05.732Z",
+      "role": "workflow:owner",
+      "workflowId": "qT0uUtXnFOdFh19T",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-02T12:05:15.000Z",
+  "versionId": "a4d40b24-4124-467f-b281-76d7c29417b2"
+}
