@@ -1,0 +1,255 @@
+{
+  "active": false,
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-05T13:35:08.334Z",
+  "id": "iuA4qCKS05YNLRTR",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "[VA360] Asistente de librería - RAG",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "79087bf6-cf12-4779-9ae9-4bb4905b5b69",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        80,
+        112
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Eres el agente de una libreria que se llama VA360 y debes ser muy amable y ofrecer siempre ofertas para que los clientes nos compren libros. Si el cliente te pregunta algo que no sabes, di sencillamente: No lo se. \n"
+        }
+      },
+      "id": "16b7208a-8e42-413e-9447-4e73b4740474",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        112,
+        -48
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "448f68b2-076f-4967-9b2a-94f532dd2f2c",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "name": "va360_library",
+        "description": "Devuelve documentos relacionados con la librería. Stock, información, preguntas y respuestas..."
+      },
+      "id": "683875c6-b18f-49d3-b8e3-b7e7e3338adf",
+      "name": "Vector Store Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        368,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "d9bb5d55-95ad-4878-9665-0b760774d41e",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        288,
+        416
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "libreria6",
+          "mode": "list",
+          "cachedResultName": "libreria6"
+        },
+        "options": {
+          "pineconeNamespace": "libreria-va360"
+        }
+      },
+      "id": "7eaf51fe-6a13-40fb-9807-79d620ffe52d",
+      "name": "Pinecone Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        288,
+        304
+      ],
+      "credentials": {
+        "pineconeApi": {
+          "id": "QhpTGFQOv5XeQbMG",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e87e8c57-31a1-4c1a-aca7-c9002fd65051",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        608,
+        304
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        -48
+      ],
+      "id": "0b33164c-081a-4d0b-9d2a-c443e73c4eef",
+      "name": "When chat message received",
+      "webhookId": "6c95eea4-5d0b-4b45-83c6-3f0b8996ea98"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-05T13:35:08.344Z",
+      "updatedAt": "2025-11-05T13:35:08.344Z",
+      "role": "workflow:owner",
+      "workflowId": "iuA4qCKS05YNLRTR",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-05T20:35:34.000Z",
+  "versionId": "cb9e20bb-050e-44d9-9ca9-f120659fa311"
+}
