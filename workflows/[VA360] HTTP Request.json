@@ -75,15 +75,17 @@
       ]
     }
   },
-  "createdAt": "2025-10-31T18:32:37.390Z",
-  "id": "S4QoaJI537totThd",
+  "createdAt": "2025-10-31T17:51:33.257Z",
+  "id": "bZsHFssZnpRIt72a",
   "isArchived": true,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "[VA360] HTTP Request",
   "nodes": [
     {
       "parameters": {},
-      "id": "729a78b7-3cb2-4400-9526-ad2410e1b61a",
+      "id": "27ac46ac-380b-4a1f-9c63-9191c79f8a0a",
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
@@ -95,19 +97,6 @@
     {
       "parameters": {
         "url": "https://exercisedb.p.rapidapi.com/exercises",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "limit",
-              "value": "10"
-            },
-            {
-              "name": "offset",
-              "value": "0"
-            }
-          ]
-        },
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -117,13 +106,13 @@
             },
             {
               "name": "x-rapidapi-key",
-              "value": "xxxxxxx"
+              "value": "a7894b5cd0msh05b773173392423p1f4823jsn57cc063fd5fe"
             }
           ]
         },
         "options": {}
       },
-      "id": "160f655f-24da-482e-8700-ba3b911fb760",
+      "id": "f3172116-8fe8-49fb-9a9f-cc705cc404ab",
       "name": "HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -152,7 +141,7 @@
         },
         "options": {}
       },
-      "id": "1484f92d-2903-413d-829c-75530ea3c622",
+      "id": "d19f736e-4ee3-4d9a-8a31-0c6256c8b546",
       "name": "Language",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -183,10 +172,8 @@
           "value": {
             "bodypart": "={{ $('HTTP Request').item.json.bodyPart }}",
             "name": "={{ $('HTTP Request').item.json.name }}",
-            "image": "={{ $('HTTP Request').item.json.gifUrl }}",
             "target": "={{ $('HTTP Request').item.json.target }}",
-            "language": "={{ $('Language').item.json.language }}",
-            "instructions": "={{ $json.message.content }}"
+            "instructions": "={{ $('Loop Over Items').item.json.instructions }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -215,7 +202,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "target",
@@ -233,7 +221,8 @@
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "instructions",
@@ -245,11 +234,13 @@
               "canBeUsedToMatch": true,
               "removed": false
             }
-          ]
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {}
       },
-      "id": "276e85d0-e9b1-44da-8c4a-9833468d2711",
+      "id": "d2e06b11-b91e-4a90-a84a-61c5e1800984",
       "name": "Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -259,8 +250,8 @@
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "ziBwoNqb2xUn76PS",
-          "name": "Google Sheets account 4"
+          "id": "0QIblqQurxe62Qfv",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -268,7 +259,7 @@
       "parameters": {
         "options": {}
       },
-      "id": "34d0edc9-7c12-432a-9b17-6ef73087769b",
+      "id": "78546eef-892e-4fd5-a2e4-abd31809a6fc",
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
@@ -294,18 +285,24 @@
         },
         "options": {}
       },
-      "id": "feaba685-2062-4317-998b-1f15b102027b",
+      "id": "bfd8690f-f6c9-424d-9b66-7f226b909d72",
       "name": "OpenAI",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.4,
       "position": [
         0,
         224
-      ]
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
     },
     {
       "parameters": {},
-      "id": "c5ea12d5-f766-41d3-a661-7236ce9c028a",
+      "id": "edc8a360-3a9c-40e5-b8d9-3d5cacf230cc",
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
@@ -321,16 +318,16 @@
   },
   "shared": [
     {
-      "createdAt": "2025-10-31T18:32:37.393Z",
-      "updatedAt": "2025-10-31T18:32:37.393Z",
+      "createdAt": "2025-10-31T17:51:33.259Z",
+      "updatedAt": "2025-10-31T17:51:33.259Z",
       "role": "workflow:owner",
-      "workflowId": "S4QoaJI537totThd",
+      "workflowId": "bZsHFssZnpRIt72a",
       "projectId": "wwdcdBgDn7iCDiTl"
     }
   ],
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-31T18:37:00.000Z",
-  "versionId": "1c19fcb9-0787-4045-b771-dc1c934cedc6"
+  "updatedAt": "2025-10-31T18:17:51.000Z",
+  "versionId": "4bc2808f-97a3-415a-b9de-85d65c5c261c"
 }
