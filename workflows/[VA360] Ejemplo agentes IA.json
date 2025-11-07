@@ -1,0 +1,179 @@
+{
+  "active": false,
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-03T11:59:18.056Z",
+  "id": "qKGnCTe7CWDw36ti",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "[VA360] Ejemplo agentes IA",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "options": {}
+      },
+      "id": "b8eb2f0a-8c68-42be-bc3e-191de773bca9",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        368,
+        288
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "agent": "openAiFunctionsAgent",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "5ca12182-7d35-4fec-a26c-2f4c54c2a562",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        488,
+        64
+      ],
+      "typeVersion": 1.6
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        496,
+        288
+      ],
+      "id": "38f3189d-ed4b-494a-98a8-27b32dc4a1b2",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        64
+      ],
+      "id": "57f89781-5d31-4652-9d79-3dec6f329861",
+      "name": "When chat message received",
+      "webhookId": "e8a98bb9-84fe-4c39-bcff-a16e315fe75f"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        624,
+        288
+      ],
+      "id": "630d963f-bec6-457d-98b9-089d6edafa45",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "G9zBegZGK4ywAslu",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"webs\":[\n    {\n\t\"title\": \"Titulo de la web\",\n\t\"description\": \"Descripción de la web\",\n      \"url\": \"url de la web\"\n   }\n  ]\n} "
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        752,
+        288
+      ],
+      "id": "60d1c9a5-d5c1-447b-84c3-2d48805e061e",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-03T11:59:18.065Z",
+      "updatedAt": "2025-11-03T11:59:18.065Z",
+      "role": "workflow:owner",
+      "workflowId": "qKGnCTe7CWDw36ti",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-04T12:00:45.000Z",
+  "versionId": "b116a555-a313-4bca-9719-2967a6add794"
+}
