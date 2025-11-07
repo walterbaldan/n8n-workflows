@@ -1,0 +1,87 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-29T14:31:53.861Z",
+  "id": "iIKIoDFG9ChGqRzY",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Primo",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8994b82c-d35e-465b-b9c7-6b3531619961",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Prueba desde N(N ¿Me saludas a los seguidores que estan presenciando esta clase en vivo?"
+            }
+          ]
+        },
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        208,
+        0
+      ],
+      "id": "eaf53db4-9f7e-4314-9280-357a5f7f577c",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-29T14:31:53.865Z",
+      "updatedAt": "2025-10-29T14:31:53.865Z",
+      "role": "workflow:owner",
+      "workflowId": "iIKIoDFG9ChGqRzY",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-06T21:13:35.000Z",
+  "versionId": "df56bf39-b9f0-4561-bf27-5437f4219307"
+}
