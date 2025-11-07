@@ -1,0 +1,334 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Language",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Language": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-31T18:37:31.706Z",
+  "id": "rozyhn5uZXwDENYl",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "HTTP Request",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5354b845-7250-47f6-8205-b2dff3efe4e9",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -880,
+        208
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://exercisedb.p.rapidapi.com/exercises",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "exercisedb.p.rapidapi.com"
+            },
+            {
+              "name": "x-rapidapi-key",
+              "value": "a7894b5cd0msh05b773173392423p1f4823jsn57cc063fd5fe"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5b76856e-98cf-46f9-a4eb-296b78a24a34",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -416,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "de94bcb8-d9be-4153-a527-02dee975e06b",
+              "name": "language",
+              "value": "spanish language",
+              "type": "string"
+            },
+            {
+              "id": "d153ae78-a2fc-4d2e-8bef-77a265720e24",
+              "name": "Test",
+              "value": "test",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2efec714-ccbb-405a-b350-761e2f031db5",
+      "name": "Language",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -624,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9276d031-98fb-410f-b9ef-1dd8b0b67a36",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Traduce el contenido al siguiente idioma: {{ $('Language').item.json.language }}\n\nEl contenido es este: {{ $('Loop Over Items').item.json.instructions }}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "04acd812-c305-41a8-a7f5-4885645d07c9",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        16,
+        224
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "6aj6wsaRy4XdFF2Q",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "099d4be3-5826-4ef0-bfda-2eccd8b85d53",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1Yo6LMDxpq6o-28GifSmA8_sWSKRG-7LOt2VnvTjssO8"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "0",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ $('Loop Over Items').item.json.name }}",
+            "bodypart": "={{ $('Loop Over Items').item.json.bodyPart }}",
+            "image": "={{ $('Loop Over Items').item.json.id }}",
+            "target": "={{ $('Loop Over Items').item.json.target }}",
+            "languaje": "={{ $('Language').item.json.language }}",
+            "instructions": "={{ $json.message.content }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "bodypart",
+              "displayName": "bodypart",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image",
+              "displayName": "image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "target",
+              "displayName": "target",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "languaje",
+              "displayName": "languaje",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "instructions",
+              "displayName": "instructions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        304,
+        224
+      ],
+      "id": "57efa30a-0740-4e49-95e6-3206ae6ec9e9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "b19rl7XjBNXNd0LR",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-31T18:37:31.712Z",
+      "updatedAt": "2025-10-31T18:37:31.712Z",
+      "role": "workflow:owner",
+      "workflowId": "rozyhn5uZXwDENYl",
+      "projectId": "wwdcdBgDn7iCDiTl"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-06T20:58:59.000Z",
+  "versionId": "02a7e2d2-6d2a-4bc2-8df0-4861abbf49be"
+}
